@@ -2,13 +2,13 @@
 
 [![GitHub CI](https://github.com/steinbergmedia/libmusictok/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/steinbergmedia/libmusictok/actions/workflows/cmake-multi-platform.yml)
 
-LibMusicTok is a c++ port of the python [MIDITok](https://github.com/Natooz/MidiTok?tab=readme-ov-file) library
+LibMusicTok is a C++ port of the python [MIDITok](https://github.com/Natooz/MidiTok?tab=readme-ov-file) library
 for faster tokenization of symbolic music in realtime music software applications. This library is maintained by Steinberg Media Technologies GmbH.
 
 ## Supported Operating Softwares:
 - Ubuntu, using the g++ compiler
 - Windows, using the MSVC compiler
-- MacOS, using the AppleClang compiler
+- macOS, using the AppleClang compiler
 
 ### Requirements:
 - C++ 20
@@ -17,7 +17,7 @@ for faster tokenization of symbolic music in realtime music software application
 
 ## Installing Rust
 
-### MacOS & Linux
+### macOS & Linux
 We recommend installing rust using rustup.
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -122,7 +122,7 @@ libmusictokUtils::saveMidiFromScore(score, outputPath)
 ## Configuring Cmake :
 Regardless of your OS, please run the following commands from the project root.
 
-### MacOS:
+### macOS:
 ```bash
 cmake -B build -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release -DLIBMUSICTOK_BUILD_TESTS=ON -DLIBMUSICTOK_BUILD_BENCHMARKS=ON
 ```
@@ -153,7 +153,7 @@ cmake --build build --config Release -j
 
 ## Run Tests and Benchmarks:
 
-### MacOS & Linux:
+### macOS & Linux:
 ```bash
 ./build/LibMusicTokTest
 ./build/LibMusicTokBenchmark --benchmark_time_unit=ms
