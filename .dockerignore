@@ -1,0 +1,5 @@
+bin/
+build*/
+Xcodebuild/
+.github/
+reports/

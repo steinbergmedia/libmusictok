@@ -1,0 +1,32 @@
+BasedOnStyle: Microsoft
+BraceWrapping:
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: false
+  AfterStruct: true
+  AfterUnion: true
+  BeforeElse: true
+  IndentBraces: false
+IndentWidth: 4
+UseTab: Never
+IndentCaseLabels: true
+CommentPragmas: '^(\\s*//-)*\\s*------------------------------------------------------------------------'
+AllowShortIfStatementsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: true
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+AllowShortFunctionsOnASingleLine: Empty
+AlignAfterOpenBracket: Align
+AlignEscapedNewlinesLeft: true
+AlignTrailingComments: true
+AlignArrayOfStructures: Right
+AlignConsecutiveAssignments: Consecutive
+BreakConstructorInitializers: BeforeComma
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+ReflowComments: false
+Standard: Cpp11
+IndentPPDirectives: None
+AllowAllParametersOfDeclarationOnNextLine: false
+NamespaceIndentation: None
+AccessModifierOffset: -4

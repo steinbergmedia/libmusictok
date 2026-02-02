@@ -1,0 +1,15 @@
+# MacOS
+.DS_Store
+
+# CLion
+.idea/
+cmake-build-debug/
+
+
+# Binary / build folder
+bin/
+build/
+XcodeBuild/
+
+# outputs
+resources/outputs/
