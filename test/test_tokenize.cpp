@@ -17,7 +17,7 @@
 #include "libmusictok/tokenizations/music_tokenizer.h"
 #include "libmusictok/tokenizations/remi.h"
 #include "libmusictok/tokenizations/tsd.h"
-#include "testing_utilities.hpp"
+#include "libmusictok/testing/testing_utilities.hpp"
 #include <filesystem>
 #include <gtest/gtest.h>
 #include <string>

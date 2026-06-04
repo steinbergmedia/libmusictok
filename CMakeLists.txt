@@ -53,6 +53,7 @@ set(HEADER_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/tokenizations/mumidi.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/attribute_control.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/tokenizer_config.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/testing/testing_utilities.hpp"
 )
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/include" PREFIX "include" FILES ${HEADER_FILES})
@@ -75,7 +76,6 @@ if(LIBMUSICTOK_BUILD_TESTS)
         "${CMAKE_CURRENT_SOURCE_DIR}/test/tokenizers_cpp_test.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/test/test_tokenize.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/test/test_preprocess.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/test/testing_utilities.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/test/event_test.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/test/attribute_control_test.cpp"
     )
