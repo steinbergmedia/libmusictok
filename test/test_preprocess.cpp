@@ -15,7 +15,7 @@
 #include "libmusictok/tokenizations/midilike.h"
 #include "libmusictok/tokenizations/music_tokenizer.h"
 #include "libmusictok/tokenizations/tsd.h"
-#include "libmusictok/testing/testing_utilities.hpp"
+#include "libmusictok/testing/testing_utilities.h"
 #include <filesystem>
 #include <gtest/gtest.h>
 #include <string>

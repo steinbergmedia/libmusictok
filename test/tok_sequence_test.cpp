@@ -16,7 +16,7 @@
 #include "libmusictok/tokenizations/tsd.h"
 #include "libmusictok/tokenizer_config.h"
 #include "libmusictok/utility_functions.h"
-#include "libmusictok/testing/testing_utilities.hpp"
+#include "libmusictok/testing/testing_utilities.h"
 
 //------------------------------------------------------------------------
 

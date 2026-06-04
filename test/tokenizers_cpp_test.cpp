@@ -13,7 +13,7 @@
 //------------------------------------------------------------------------
 
 #include "libmusictok/utility_functions.h"
-#include "libmusictok/testing/testing_utilities.hpp"
+#include "libmusictok/testing/testing_utilities.h"
 #include <filesystem>
 #include <gtest/gtest.h>
 

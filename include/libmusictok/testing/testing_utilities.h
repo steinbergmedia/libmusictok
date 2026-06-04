@@ -2,7 +2,7 @@
 // Project     : libmusictok
 //
 // Category    : Tests
-// Filename    : test/testing_utilities.hpp
+// Filename    : include/libmusictok/testing/testing_utilities.h
 // Created by  : Steinberg, 09/2025
 // Description : Helper functions to the testing suite
 //

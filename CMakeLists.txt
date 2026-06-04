@@ -53,7 +53,7 @@ set(HEADER_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/tokenizations/mumidi.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/attribute_control.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/tokenizer_config.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/testing/testing_utilities.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/libmusictok/testing/testing_utilities.h"
 )
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/include" PREFIX "include" FILES ${HEADER_FILES})
