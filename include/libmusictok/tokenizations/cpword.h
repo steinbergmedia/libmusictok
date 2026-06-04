@@ -20,7 +20,7 @@
 namespace libmusictok {
 
 //------------------------------------------------------------------------
-class CPWord final : public MusicTokenizer
+class CPWord : public MusicTokenizer
 {
 public:
     CPWord(const std::filesystem::path &tokenizerFile, bool v);

@@ -20,7 +20,7 @@
 namespace libmusictok {
 
 //------------------------------------------------------------------------
-class Octuple final : public MusicTokenizer
+class Octuple : public MusicTokenizer
 {
 public:
     Octuple(const std::filesystem::path &tokenizerFile, bool v);

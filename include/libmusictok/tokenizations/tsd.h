@@ -21,7 +21,7 @@
 namespace libmusictok {
 
 //------------------------------------------------------------------------
-class TSD final : public MusicTokenizer
+class TSD : public MusicTokenizer
 {
 public:
     TSD(const std::filesystem::path &tokenizerFile, bool v);

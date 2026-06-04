@@ -21,7 +21,7 @@
 namespace libmusictok {
 
 //------------------------------------------------------------------------
-class MIDILike final : public MusicTokenizer
+class MIDILike : public MusicTokenizer
 {
 public:
     MIDILike(const std::filesystem::path &tokenizerFile, bool v);

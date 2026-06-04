@@ -21,7 +21,7 @@
 namespace libmusictok {
 
 //------------------------------------------------------------------------
-class Structured final : public MusicTokenizer
+class Structured : public MusicTokenizer
 {
 public:
     Structured(const std::filesystem::path &tokenizerFile, bool v);

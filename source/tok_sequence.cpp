@@ -210,12 +210,12 @@ void TokSequence::setTicksBeats(std::vector<int> ticksBeats_)
 }
 
 //------------------------------------------------------------------------
-std::vector<int> TokSequence::getTicksBars()
+const std::vector<int>& TokSequence::getTicksBars() const
 {
 	return ticksBars;
 }
 //------------------------------------------------------------------------
-std::vector<int> TokSequence::getTicksBeats()
+const std::vector<int>& TokSequence::getTicksBeats() const
 {
 	return ticksBeats;
 }

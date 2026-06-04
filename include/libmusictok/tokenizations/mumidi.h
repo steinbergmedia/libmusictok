@@ -20,7 +20,7 @@
 namespace libmusictok {
 
 //------------------------------------------------------------------------
-class MuMIDI final : public MusicTokenizer
+class MuMIDI : public MusicTokenizer
 {
 public:
     MuMIDI(const std::filesystem::path &tokenizerFile, bool v);

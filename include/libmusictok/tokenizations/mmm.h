@@ -21,7 +21,7 @@
 namespace libmusictok {
 
 //------------------------------------------------------------------------
-class MMM final : public MusicTokenizer
+class MMM : public MusicTokenizer
 {
 public:
     MMM(const std::filesystem::path &tokenizerFile, bool verbose = true);
