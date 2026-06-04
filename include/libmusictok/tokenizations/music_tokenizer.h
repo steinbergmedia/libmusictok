@@ -338,34 +338,6 @@ protected:
 
     std::vector<std::string> createChordsTokens() const;
 
-    // vars
-    std::vector<std::pair<int, int>> timeSignatures;
-    int timeDivision;
-    std::unordered_map<int, std::unordered_map<std::string, int>> tpbTokensToTicks;
-    std::unordered_map<int, std::unordered_map<int, std::string>> tpbTicksToTokens;
-    std::unordered_map<int, std::unordered_map<std::string, int>> tpbRestsToTicks;
-    std::unordered_map<int, std::vector<symusic::i32>> tpbToTimeArray;
-    std::unordered_map<int, std::vector<symusic::i32>> tpbToRestArray;
-    bool verbose = true;
-    bool oneTokenStream;
-    std::unique_ptr<TokenIdConverterBase> tic;
-    bool noteOnOff = false;
-
-    std::vector<std::tuple<int, int, int>> durations;
-    std::vector<std::tuple<int, int, int>> rests;
-    std::vector<double> tempos;
-    std::vector<double> temposMspq;
-    double defaultTempo;
-    int firstBeatRes;
-    std::unordered_map<int, int> tpbPerTs;
-    std::vector<symusic::i32> pitchBends;
-    std::vector<symusic::i8> velocities;
-    std::vector<std::shared_ptr<AttributeControl>> attributeControls;
-    std::unordered_map<std::string, std::set<std::string>> tokensTypesGraph;
-
-private:
-    friend class MMM;
-
     std::unordered_map<int, int> createTpbPerTs() const;
 
     std::vector<std::tuple<int, int, int>> createRests() const;
@@ -435,7 +407,33 @@ private:
     void createControlsForPedals(ScoreType &score) const;
 
     // vars
+    std::vector<std::pair<int, int>> timeSignatures;
+    int timeDivision;
+    std::unordered_map<int, std::unordered_map<std::string, int>> tpbTokensToTicks;
+    std::unordered_map<int, std::unordered_map<int, std::string>> tpbTicksToTokens;
+    std::unordered_map<int, std::unordered_map<std::string, int>> tpbRestsToTicks;
+    std::unordered_map<int, std::vector<symusic::i32>> tpbToTimeArray;
+    std::unordered_map<int, std::vector<symusic::i32>> tpbToRestArray;
+    bool verbose = true;
+    bool oneTokenStream;
+    std::unique_ptr<TokenIdConverterBase> tic;
+    bool noteOnOff = false;
+
+    std::vector<std::tuple<int, int, int>> durations;
+    std::vector<std::tuple<int, int, int>> rests;
+    std::vector<double> tempos;
+    std::vector<double> temposMspq;
+    double defaultTempo;
+    int firstBeatRes;
+    std::unordered_map<int, int> tpbPerTs;
+    std::vector<symusic::i32> pitchBends;
+    std::vector<symusic::i8> velocities;
+    std::vector<std::shared_ptr<AttributeControl>> attributeControls;
+    std::unordered_map<std::string, std::set<std::string>> tokensTypesGraph;
     TokenizerType type = TokenizerType::kBase;
+
+private:
+    friend class MMM;
 };
 
 } // namespace libmusictok

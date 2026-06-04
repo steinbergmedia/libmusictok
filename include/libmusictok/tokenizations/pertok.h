@@ -30,7 +30,7 @@ public:
 
     ~PerTok() = default;
 
-private:
+protected:
     void postConstructorChecks();
 
     void tweakConfigBeforeCreatingVoc() override;

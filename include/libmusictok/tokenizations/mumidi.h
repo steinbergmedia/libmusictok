@@ -29,7 +29,7 @@ public:
 
     ~MuMIDI() = default;
 
-private:
+protected:
     void tweakConfigBeforeCreatingVoc() override;
 
     std::variant<std::vector<std::vector<std::string>>, std::vector<std::string>> createBaseVocabulary() override;

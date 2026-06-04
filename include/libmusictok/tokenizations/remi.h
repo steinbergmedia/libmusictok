@@ -30,7 +30,7 @@ public:
 
     ~REMI() = default;
 
-private:
+protected:
     friend class MMM;
 
     void tweakConfigBeforeCreatingVoc() override;

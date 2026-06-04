@@ -347,7 +347,6 @@ inline void sortScore(ScoreType &score, bool sortTracks = true)
 }
 
 //------------------------------------------------------------------------
-// TODO: test this function once Octuple is implemented...
 inline void adaptTempoChangesTimes(std::vector<std::shared_ptr<TrackType>>::const_iterator trackBegin,
                                    std::vector<std::shared_ptr<TrackType>>::const_iterator trackEnd,
                                    symusic::shared<symusic::pyvec<TempoType>> tempos, double defaultTempo)

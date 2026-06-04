@@ -51,7 +51,7 @@ public:
 
     void loadNewConfigFile(const std::filesystem::path &tokenizerConfigFile) override;
 
-private:
+protected:
     void loadFromJson(const std::filesystem::path &tokenizerFile) override;
 
     void tweakConfigBeforeCreatingVoc() override;
