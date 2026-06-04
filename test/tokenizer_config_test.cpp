@@ -27,6 +27,8 @@
 //------------------------------------------------------------------------
 using namespace libmusictok;
 namespace libmusictokTest {
+
+const std::string resourcesPath = RESOURCES_DIRECTORY;
 //------------------------------------------------------------------------
 
 class TokenizerConfigTest : public ::testing::Test

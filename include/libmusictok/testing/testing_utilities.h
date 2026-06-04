@@ -38,8 +38,6 @@ namespace libmusictokTest {
 
 // constants
 constexpr int maxBarEmbedding_default      = 2000;
-inline const std::string projrectSourceDir = PROJECT_SOURCE_DIR;
-inline const std::string resourcesPath     = RESOURCES_DIRECTORY;
 
 //------------------------------------------------------------------------
 inline std::vector<std::string> getAllTokenizations()
@@ -54,10 +52,10 @@ inline std::vector<std::string> getMMMBaseTokenizations()
 }
 
 //------------------------------------------------------------------------
-inline std::vector<std::filesystem::path> getMidiPathsMultitrack()
+inline std::vector<std::filesystem::path> getMidiPathsMultitrack(const std::filesystem::path &resourcesPath)
 {
     std::vector<std::filesystem::path> result;
-    std::filesystem::path midiFolder = std::filesystem::path(resourcesPath) / "scores" / "Multitrack_MIDIs";
+    std::filesystem::path midiFolder = resourcesPath / "scores" / "Multitrack_MIDIs";
     for (auto &p : std::filesystem::recursive_directory_iterator(midiFolder))
     {
         if (p.is_regular_file() && p.path().extension() == ".mid")
@@ -70,10 +68,10 @@ inline std::vector<std::filesystem::path> getMidiPathsMultitrack()
 }
 
 //------------------------------------------------------------------------
-inline std::vector<std::filesystem::path> getMidiPathsOneTrack()
+inline std::vector<std::filesystem::path> getMidiPathsOneTrack(const std::filesystem::path &resourcesPath)
 {
     std::vector<std::filesystem::path> result;
-    std::filesystem::path midiFolder = std::filesystem::path(resourcesPath) / "scores" / "One_track_MIDIs";
+    std::filesystem::path midiFolder = resourcesPath / "scores" / "One_track_MIDIs";
     for (auto &p : std::filesystem::recursive_directory_iterator(midiFolder))
     {
         if (p.is_regular_file() && p.path().extension() == ".mid")
@@ -86,10 +84,10 @@ inline std::vector<std::filesystem::path> getMidiPathsOneTrack()
 }
 
 //------------------------------------------------------------------------
-inline std::vector<std::filesystem::path> getMidiPathsCorrupted()
+inline std::vector<std::filesystem::path> getMidiPathsCorrupted(const std::filesystem::path &resourcesPath)
 {
     std::vector<std::filesystem::path> result;
-    std::filesystem::path midiFolder = std::filesystem::path(resourcesPath) / "scores" / "MIDIs_corrupted";
+    std::filesystem::path midiFolder = resourcesPath / "scores" / "MIDIs_corrupted";
     for (auto &p : std::filesystem::recursive_directory_iterator(midiFolder))
     {
         if (p.is_regular_file() && p.path().extension() == ".mid")
@@ -102,10 +100,10 @@ inline std::vector<std::filesystem::path> getMidiPathsCorrupted()
 }
 
 //------------------------------------------------------------------------
-inline std::vector<std::filesystem::path> getAllMidiPaths()
+inline std::vector<std::filesystem::path> getAllMidiPaths(const std::filesystem::path &resourcesPath)
 {
     std::vector<std::filesystem::path> result;
-    std::filesystem::path multiTrackFolder = std::filesystem::path(resourcesPath) / "scores" / "Multitrack_MIDIs";
+    std::filesystem::path multiTrackFolder = resourcesPath / "scores" / "Multitrack_MIDIs";
     for (auto &p : std::filesystem::recursive_directory_iterator(multiTrackFolder))
     {
         if (p.is_regular_file() && p.path().extension() == ".mid")
@@ -113,7 +111,7 @@ inline std::vector<std::filesystem::path> getAllMidiPaths()
             result.push_back(p.path());
         }
     }
-    std::filesystem::path oneTrackFolder = std::filesystem::path(resourcesPath) / "scores" / "One_track_MIDIs";
+    std::filesystem::path oneTrackFolder = resourcesPath / "scores" / "One_track_MIDIs";
     for (auto &p : std::filesystem::recursive_directory_iterator(oneTrackFolder))
     {
         if (p.is_regular_file() && p.path().extension() == ".mid")

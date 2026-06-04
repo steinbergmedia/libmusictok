@@ -23,6 +23,8 @@
 using namespace libmusictokUtils;
 namespace libmusictokTest {
 
+const std::string resourcesPath = RESOURCES_DIRECTORY;
+
 //------------------------------------------------------------------------
 class UtilityFunctionsTest : public ::testing::Test
 {

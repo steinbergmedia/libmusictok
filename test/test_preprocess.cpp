@@ -23,6 +23,8 @@
 using namespace libmusictok;
 namespace libmusictokTest {
 
+const std::string resourcesPath = RESOURCES_DIRECTORY;
+
 //------------------------------------------------------------------------
 class TestPreprocess : public ::testing::TestWithParam<std::tuple<std::string, std::filesystem::path>>
 {
@@ -65,7 +67,7 @@ std::vector<std::tuple<std::string, std::filesystem::path>> makeTestCases()
     std::vector<std::tuple<std::string, std::filesystem::path>> cases;
     for (const auto &tok : {"MIDILike", "TSD"})
     {
-        for (const auto &path : getAllMidiPaths())
+		for (const auto &path : getAllMidiPaths(resourcesPath))
         {
             cases.emplace_back(tok, path);
         }

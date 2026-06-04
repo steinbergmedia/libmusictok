@@ -25,6 +25,8 @@
 using namespace libmusictok;
 namespace libmusictokTest {
 
+const std::string resourcesPath = RESOURCES_DIRECTORY;
+
 //------------------------------------------------------------------------
 std::vector<std::pair<std::string, TokenizerConfig>> getTokParamsOneTrack()
 {
@@ -199,7 +201,7 @@ TEST_P(MultiTrackTestTokenize, MultiTrackMidiToTokensToMidi)
 std::vector<std::tuple<std::filesystem::path, std::pair<std::string, TokenizerConfig>>> makeTestCasesOneTrack()
 {
     std::vector<std::tuple<std::filesystem::path, std::pair<std::string, TokenizerConfig>>> cases;
-    for (const auto &path : getMidiPathsOneTrack())
+	for (const auto &path : getMidiPathsOneTrack(resourcesPath))
     {
         for (const auto &params : getTokParamsOneTrack())
         {
@@ -215,7 +217,7 @@ std::vector<std::tuple<std::filesystem::path, std::pair<std::string, TokenizerCo
 std::vector<std::tuple<std::filesystem::path, std::pair<std::string, TokenizerConfig>>> makeTestCasesMultitrack()
 {
     std::vector<std::tuple<std::filesystem::path, std::pair<std::string, TokenizerConfig>>> cases;
-    for (const auto &path : getMidiPathsMultitrack())
+	for (const auto &path : getMidiPathsMultitrack(resourcesPath))
     {
         for (const auto &params : getTokParamsMultitrack())
         {

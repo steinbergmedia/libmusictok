@@ -25,6 +25,8 @@
 using namespace libmusictok;
 namespace libmusictokTest {
 
+const std::string resourcesPath = RESOURCES_DIRECTORY;
+
 //------------------------------------------------------------------------
 class TokenIdConverterTest : public ::testing::Test
 {
