@@ -56,7 +56,7 @@ jobs:
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           -S ${{ github.workspace }}/examples/myLibMusicTokApp
-          -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+          "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
 
       - name: Build example project
         run: cmake --build ${{ github.workspace }}/example-build --config ${{ matrix.build_type }} -j 16
