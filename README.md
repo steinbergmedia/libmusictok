@@ -36,7 +36,6 @@ The intended workflow is such that the tokenizer is prepared and tested in Pytho
 
 ## Adding LibMusicTok to your project using CMake FetchContent
 Pull a version of this repository using a commit hash or a version tag, or from a local copy (as in the example project), make it available, and link your target to it.
-You'll need to do the same for the project dependencies: [symusic](https://github.com/Yikai-Liao/symusic), [tokenizers_cpp](https://github.com/mlc-ai/tokenizers-cpp), and [json](https://github.com/nlohmann/json).
 
 ```cmake
 FetchContent_Declare(
@@ -120,7 +119,7 @@ libmusictokUtils::saveMidiFromScore(score, outputPath)
 # Building this LibMusicTok
 
 ## Configuring Cmake :
-Regardless of your OS, please run the following commands from the project root.
+Depending on your OS, please run the following commands from the project root.
 
 ### macOS:
 ```bash
@@ -146,7 +145,7 @@ cmake -B buildVs -DLIBMUSICTOK_BUILD_TESTS=ON -DLIBMUSICTOK_BUILD_BENCHMARKS=ON 
 ```
 
 ## Build and Compile:
-On all three platforms, the command is the same:
+On all three platforms, the command to build and compile is the same:
 ```bash
 cmake --build build --config Release -j
 ```
