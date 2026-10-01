@@ -49,6 +49,53 @@ jobs:
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} -j 16
 
+      - name: Configure example project
+        run: >
+          cmake -B ${{ github.workspace }}/example-build
+          -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -S ${{ github.workspace }}/examples/myLibMusicTokApp
+          -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+
+      - name: Build example project
+        run: cmake --build ${{ github.workspace }}/example-build --config ${{ matrix.build_type }} -j 16
+
+      - name: Test example project output
+        working-directory: ${{ github.workspace }}/examples/myLibMusicTokApp
+        shell: bash
+        run: |
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            executable="../../example-build/Release/MyLibMusicTokApp.exe"
+          else
+            executable="../../example-build/MyLibMusicTokApp"
+          fi
+
+          actual_output="$("$executable" midis/violin.mid tokenizers/MMM_tokenizer.json | tr -d '\r')"
+          expected_output="$(cat <<'EOF'
+          Hello from myLibMusicTokApp!
+          Creating vocabulary
+          Tokenizing: midis/violin.mid
+
+          The first few tokens are:
+          Track_Start
+          Program_40
+          Bar_None
+          Position_0
+          Tempo_250.0
+          Position_30
+          Tempo_73.87
+          Pitch_78
+          Velocity_99
+          Duration_0.2.8
+          EOF
+          )"
+
+          if [[ "$actual_output" != "$expected_output" ]]; then
+            diff -u <(printf '%s\n' "$expected_output") <(printf '%s\n' "$actual_output") || true
+            exit 1
+          fi
+
       - name: Run Tests
         working-directory: ${{ steps.strings.outputs.build-output-dir }}
         shell: bash
