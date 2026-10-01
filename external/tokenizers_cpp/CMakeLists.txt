@@ -52,8 +52,19 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "iOS")
   find_library(SECURITY_LIB Security)
   list(APPEND TOKENIZERS_C_LINK_LIBS ${FOUNDATION_LIB} ${SECURITY_LIB})
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-  if (CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
-    set(TOKENIZERS_CPP_CARGO_TARGET aarch64-apple-darwin)
+  # Check for universal (fat) binary build
+  set(TOKENIZERS_CPP_BUILD_UNIVERSAL OFF)
+  list(LENGTH CMAKE_OSX_ARCHITECTURES _osx_arch_count)
+  if (_osx_arch_count GREATER 1)
+    set(TOKENIZERS_CPP_BUILD_UNIVERSAL ON)
+    set(TOKENIZERS_CPP_CARGO_TARGET_ARM64 aarch64-apple-darwin)
+    set(TOKENIZERS_CPP_CARGO_TARGET_X86_64 x86_64-apple-darwin)
+  else()
+    if (CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64" OR CMAKE_OSX_ARCHITECTURES STREQUAL "arm64")
+      set(TOKENIZERS_CPP_CARGO_TARGET aarch64-apple-darwin)
+    elseif (CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_OSX_ARCHITECTURES STREQUAL "x86_64")
+      set(TOKENIZERS_CPP_CARGO_TARGET x86_64-apple-darwin)
+    endif()
   endif()
   if (CMAKE_OSX_DEPLOYMENT_TARGET)
     set(CARGO_EXTRA_ENVS
@@ -101,12 +112,16 @@ if (NOT TOKENIZERS_CPP_CARGO_TARGET STREQUAL "")
         "${TOKENIZERS_CPP_CARGO_BINARY_DIR}/${TOKENIZERS_CPP_CARGO_TARGET}")
 endif()
 
+set(TOKENIZERS_CPP_CARGO_RELEASE_FLAG "")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-  set(TOKENIZERS_CPP_CARGO_BINARY_DIR "${TOKENIZERS_CPP_CARGO_BINARY_DIR}/debug")
+  set(TOKENIZERS_CPP_CARGO_BUILD_TYPE "debug")
 else ()
+  set(TOKENIZERS_CPP_CARGO_BUILD_TYPE "release")
+  set(TOKENIZERS_CPP_CARGO_RELEASE_FLAG "--release")
   list(APPEND TOKENIZERS_CPP_CARGO_FLAGS --release)
-  set(TOKENIZERS_CPP_CARGO_BINARY_DIR "${TOKENIZERS_CPP_CARGO_BINARY_DIR}/release")
 endif ()
+
+set(TOKENIZERS_CPP_CARGO_BINARY_DIR "${TOKENIZERS_CPP_CARGO_BINARY_DIR}/${TOKENIZERS_CPP_CARGO_BUILD_TYPE}")
 
 get_filename_component(TOKENIZERS_CPP_ROOT ${CMAKE_CURRENT_LIST_FILE} DIRECTORY)
 set(TOKENIZERS_CPP_CARGO_SOURCE_PATH ${TOKENIZERS_CPP_ROOT}/rust)
@@ -142,20 +157,62 @@ find_program(CARGO_EXECUTABLE cargo
  PATH_SUFFIXES "bin")
 mark_as_advanced(CARGO_EXECUTABLE)
 
-# NOTE: need to use cmake -E env to be portable in win
-add_custom_command(
-  OUTPUT ${TOKENIZERS_RUST_LIB}
-  COMMAND
-  ${CMAKE_COMMAND} -E env
-  CARGO_TARGET_DIR=${TOKENIZERS_CPP_CARGO_TARGET_DIR}
-  ${CARGO_EXTRA_ENVS}
-  RUSTFLAGS="${TOKENIZERS_CPP_RUST_FLAGS}"
-  ${CARGO_EXECUTABLE} build ${TOKENIZERS_CPP_CARGO_FLAGS}
-  WORKING_DIRECTORY ${TOKENIZERS_CPP_CARGO_SOURCE_PATH}
-  POST_BUILD COMMAND
-  ${CMAKE_COMMAND} -E copy
-  ${TOKENIZERS_RUST_LIB} "${CMAKE_CURRENT_BINARY_DIR}"
-)
+if (TOKENIZERS_CPP_BUILD_UNIVERSAL)
+  # Universal (fat) binary build: build Rust library for each architecture
+  # separately, then merge with lipo.
+  set(TOKENIZERS_RUST_LIB_ARM64
+    "${TOKENIZERS_CPP_CARGO_TARGET_DIR}/${TOKENIZERS_CPP_CARGO_TARGET_ARM64}/${TOKENIZERS_CPP_CARGO_BUILD_TYPE}/libtokenizers_c.a")
+  set(TOKENIZERS_RUST_LIB_X86_64
+    "${TOKENIZERS_CPP_CARGO_TARGET_DIR}/${TOKENIZERS_CPP_CARGO_TARGET_X86_64}/${TOKENIZERS_CPP_CARGO_BUILD_TYPE}/libtokenizers_c.a")
+  set(TOKENIZERS_RUST_LIB "${CMAKE_CURRENT_BINARY_DIR}/libtokenizers_c.a")
+
+  add_custom_command(
+    OUTPUT ${TOKENIZERS_RUST_LIB}
+    # Build for arm64
+    COMMAND ${CMAKE_COMMAND} -E env
+      CARGO_TARGET_DIR=${TOKENIZERS_CPP_CARGO_TARGET_DIR}
+      ${CARGO_EXTRA_ENVS}
+      RUSTFLAGS="${TOKENIZERS_CPP_RUST_FLAGS}"
+      ${CARGO_EXECUTABLE} build --target ${TOKENIZERS_CPP_CARGO_TARGET_ARM64}
+      ${TOKENIZERS_CPP_CARGO_RELEASE_FLAG}
+    # Build for x86_64
+    COMMAND ${CMAKE_COMMAND} -E env
+      CARGO_TARGET_DIR=${TOKENIZERS_CPP_CARGO_TARGET_DIR}
+      ${CARGO_EXTRA_ENVS}
+      RUSTFLAGS="${TOKENIZERS_CPP_RUST_FLAGS}"
+      ${CARGO_EXECUTABLE} build --target ${TOKENIZERS_CPP_CARGO_TARGET_X86_64}
+      ${TOKENIZERS_CPP_CARGO_RELEASE_FLAG}
+    # Merge into universal binary
+    COMMAND lipo -create
+      ${TOKENIZERS_RUST_LIB_ARM64}
+      ${TOKENIZERS_RUST_LIB_X86_64}
+      -output ${TOKENIZERS_RUST_LIB}
+    WORKING_DIRECTORY ${TOKENIZERS_CPP_CARGO_SOURCE_PATH}
+    COMMENT "Building universal (arm64 + x86_64) libtokenizers_c.a"
+  )
+else()
+  # Single-architecture build
+  # NOTE: need to use cmake -E env to be portable in win
+  add_custom_command(
+    OUTPUT ${TOKENIZERS_RUST_LIB}
+    COMMAND
+    ${CMAKE_COMMAND} -E env
+    CARGO_TARGET_DIR=${TOKENIZERS_CPP_CARGO_TARGET_DIR}
+    ${CARGO_EXTRA_ENVS}
+    RUSTFLAGS="${TOKENIZERS_CPP_RUST_FLAGS}"
+    ${CARGO_EXECUTABLE} build ${TOKENIZERS_CPP_CARGO_FLAGS}
+    WORKING_DIRECTORY ${TOKENIZERS_CPP_CARGO_SOURCE_PATH}
+    POST_BUILD COMMAND
+    ${CMAKE_COMMAND} -E copy
+    ${TOKENIZERS_RUST_LIB} "${CMAKE_CURRENT_BINARY_DIR}"
+  )
+endif()
+
+# Create a custom target so that the cargo build is guaranteed to run
+# before anything links against tokenizers_c. add_custom_command alone
+# only runs if a target in the SAME directory depends on its OUTPUT;
+# with Xcode and multi-directory builds the dependency can be missed.
+add_custom_target(tokenizers_c_build DEPENDS ${TOKENIZERS_RUST_LIB})
 
 set(
   TOKENIZER_CPP_SRCS
@@ -186,7 +243,8 @@ if (CMAKE_SYSTEM_NAME STREQUAL "iOS")
 endif()
 add_subdirectory(sentencepiece sentencepiece EXCLUDE_FROM_ALL)
 
-add_library(tokenizers_c INTERFACE ${TOKENIZERS_RUST_LIB})
+add_library(tokenizers_c INTERFACE)
+add_dependencies(tokenizers_c tokenizers_c_build)
 target_link_libraries(tokenizers_c INTERFACE ${TOKENIZERS_RUST_LIB} ${TOKENIZERS_C_LINK_LIBS})
 
 target_link_libraries(tokenizers_cpp PRIVATE tokenizers_c sentencepiece-static ${TOKENIZERS_CPP_LINK_LIBS})

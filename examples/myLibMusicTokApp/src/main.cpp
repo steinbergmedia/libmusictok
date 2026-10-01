@@ -34,7 +34,7 @@ int runApp(int argc, char *argv[])
         std::cout << "Tokenizing: " << midiStr << std::endl << std::endl;
 
         auto tokens = tokenizer.encode(midiPath);
-        std::cout << "The first few tokens are: " << std::endl;
+        std::cout << "The first few tokens are:" << std::endl;
 
         libmusictok::TokSequence tokSeq   = std::get<libmusictok::TokSequence>(tokens);
         std::vector<std::string> tokenVec = tokSeq.tokens.get();

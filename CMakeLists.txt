@@ -10,8 +10,8 @@ include(external/Dependencies.cmake)
 
 add_compile_definitions(PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
-add_library(LibMusicTok)
-target_include_directories(LibMusicTok PUBLIC include)
+add_library(musictok)
+target_include_directories(musictok PUBLIC include)
 
 set(SOURCE_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/source/tokenizer_config.cpp"
@@ -59,15 +59,13 @@ set(HEADER_FILES
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/include" PREFIX "include" FILES ${HEADER_FILES})
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/source" PREFIX "source" FILES ${SOURCE_FILES})
 
-target_sources(LibMusicTok PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(LibMusicTok PUBLIC symusic tokenizers_cpp)
-target_include_directories(LibMusicTok PUBLIC ${symusic_SOURCE_DIR}/include ${tokenizers_cpp_SOURCE_DIR}/include)
-
-target_link_libraries(LibMusicTok PRIVATE nlohmann_json::nlohmann_json)
+target_sources(musictok PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(musictok PUBLIC symusic tokenizers_cpp nlohmann_json::nlohmann_json)
+target_include_directories(musictok PUBLIC ${symusic_SOURCE_DIR}/include ${tokenizers_cpp_SOURCE_DIR}/include)
 
 if(LIBMUSICTOK_BUILD_TESTS)
     add_executable(LibMusicTokTest)
-    target_link_libraries(LibMusicTokTest LibMusicTok GTest::gtest_main GTest::gtest symusic tokenizers_cpp nlohmann_json::nlohmann_json)
+    target_link_libraries(LibMusicTokTest musictok GTest::gtest_main GTest::gtest symusic tokenizers_cpp nlohmann_json::nlohmann_json)
     set(TEST_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/test/tok_sequence_test.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/test/token_id_converter_test.cpp"
@@ -102,7 +100,7 @@ endif()
 
 if(LIBMUSICTOK_BUILD_BENCHMARKS)
     add_executable(LibMusicTokBenchmark)
-    target_link_libraries(LibMusicTokBenchmark LibMusicTok benchmark symusic tokenizers_cpp nlohmann_json::nlohmann_json)
+    target_link_libraries(LibMusicTokBenchmark musictok benchmark symusic tokenizers_cpp nlohmann_json::nlohmann_json)
     file(GLOB_RECURSE BENCHMARK_FILES "${CMAKE_CURRENT_SOURCE_DIR}/benchmark/*.cpp")
     set(BENCHMARK_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/benchmark/midilike_benchmark.cpp"
