@@ -40,12 +40,12 @@ You'll need to do the same for the project dependencies: [symusic](https://githu
 
 ```cmake
 FetchContent_Declare(
-    LibMusicTok
+    musictok
     GIT_REPOSITORY https://github.com/steinbergmedia/libmusictok
     GIT_TAG v1.0.0
 )
-FetchContent_MakeAvailable(LibMusicTok)
-target_link_libraries(YourCoolProject PRIVATE LibMusicTok)
+FetchContent_MakeAvailable(musictok)
+target_link_libraries(YourCoolProject PRIVATE musictok)
 ```
 
 ## Using the library

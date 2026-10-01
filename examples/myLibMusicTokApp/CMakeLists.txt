@@ -8,13 +8,13 @@ include(FetchContent)
 include(external/Dependencies.cmake)
 
 FetchContent_Declare(
-    LibMusicTok
+    musictok
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
-FetchContent_MakeAvailable(LibMusicTok)
+FetchContent_MakeAvailable(musictok)
 
 # Add your executable
 add_executable(MyLibMusicTokApp src/main.cpp)
 
 # Link the fetched library
-target_link_libraries(MyLibMusicTokApp PRIVATE LibMusicTok nlohmann_json::nlohmann_json symusic tokenizers_cpp)
+target_link_libraries(MyLibMusicTokApp PRIVATE musictok nlohmann_json::nlohmann_json symusic tokenizers_cpp)
