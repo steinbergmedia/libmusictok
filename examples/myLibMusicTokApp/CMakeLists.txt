@@ -4,9 +4,6 @@ project(MyLibMusicTokApp LANGUAGES CXX)
 # Enable FetchContent to get dependencies
 include(FetchContent)
 
-# add_subdirectory(external)
-include(external/Dependencies.cmake)
-
 FetchContent_Declare(
     musictok
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..
