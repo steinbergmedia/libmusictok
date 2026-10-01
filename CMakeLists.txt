@@ -60,10 +60,8 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/include" PREFIX "include" FILES $
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/source" PREFIX "source" FILES ${SOURCE_FILES})
 
 target_sources(musictok PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(musictok PUBLIC symusic tokenizers_cpp)
+target_link_libraries(musictok PUBLIC symusic tokenizers_cpp nlohmann_json::nlohmann_json)
 target_include_directories(musictok PUBLIC ${symusic_SOURCE_DIR}/include ${tokenizers_cpp_SOURCE_DIR}/include)
-
-target_link_libraries(musictok PRIVATE nlohmann_json::nlohmann_json)
 
 if(LIBMUSICTOK_BUILD_TESTS)
     add_executable(LibMusicTokTest)

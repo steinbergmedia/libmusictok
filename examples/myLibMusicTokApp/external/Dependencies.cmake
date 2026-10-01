@@ -8,5 +8,5 @@ include(external/tokenizers_cpp/add_tokenizers_cpp.cmake)
 include(external/symusic/add_symusic.cmake)
 
 # JSON #
-FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
-FetchContent_MakeAvailable(json)
+# FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
+# FetchContent_MakeAvailable(json)

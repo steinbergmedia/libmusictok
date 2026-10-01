@@ -17,4 +17,4 @@ FetchContent_MakeAvailable(musictok)
 add_executable(MyLibMusicTokApp src/main.cpp)
 
 # Link the fetched library
-target_link_libraries(MyLibMusicTokApp PRIVATE musictok nlohmann_json::nlohmann_json symusic tokenizers_cpp)
+target_link_libraries(MyLibMusicTokApp PRIVATE musictok)
